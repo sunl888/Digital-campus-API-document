@@ -27,8 +27,9 @@ node index.js
 ```
 
 ## 开始使用
-[编写Api文档](http://localhost:8083")<br>
-[查看Api文档](http://localhost:8082") 
+如果你想**编写** Api 文档,请在浏览器中输入: http://localhost:8083
+
+如果你只想**查看** Api 文档,请在浏览器中输入: http://localhost:8082
 
 ## License
 The project is open-sourced software licensed under the [MIT license](https://mit-license.org/).
