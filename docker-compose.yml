@@ -1,0 +1,19 @@
+version: "3"
+services:
+  swagger-ui:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: swagger-ui
+    volumes:
+      - ./dist/:/usr/share/nginx/html
+    environment:
+      - SWAGGER_JSON="/usr/share/nginx/html/swagger.json"
+    ports:
+      - "8082:8080"
+
+  swagger-edit:
+    image: swaggerapi/swagger-editor
+    container_name: swagger-editor
+    ports:
+      - "8083:8080"
