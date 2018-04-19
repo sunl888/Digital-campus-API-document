@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
 app.use('/', express.static('public'));
-app.listen(3000, function () {
-    console.log('Listening on port 3000!');
+app.listen(8082, function () {
+    console.log('Please enter http://localhost:8082/ in the browser.');
 });
