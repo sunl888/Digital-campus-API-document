@@ -5,12 +5,10 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: swagger-ui
-    volumes:
-      - ./dist/:/usr/share/nginx/html
     environment:
-      - SWAGGER_JSON="/usr/share/nginx/html/swagger.json"
+      - BASE_API_URL=localhost:8082
     ports:
-      - "8082:8080"
+      - "8082:80"
 
   swagger-edit:
     image: swaggerapi/swagger-editor

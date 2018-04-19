@@ -1,0 +1,72 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "数据中心 API 文档",
+    "version" : "1.0.0",
+    "title" : "数据中心项目 API 文档",
+    "contact" : {
+      "email" : "2013855675@qq.com"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/wqer1019/soraka/1.0.0",
+  "tags" : [ {
+    "name" : "rooms",
+    "description" : "教室管理"
+  }, {
+    "name" : "class",
+    "description" : "班级管理"
+  }, {
+    "name" : "excel",
+    "description" : "导入导出"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/rooms" : {
+      "get" : {
+        "tags" : [ "rooms" ],
+        "summary" : "获取教室数据",
+        "description" : "获取教室数据\n",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "college_id",
+          "in" : "query",
+          "description" : "按学院筛选",
+          "required" : false,
+          "type" : "integer",
+          "minimum" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "type_id",
+          "in" : "query",
+          "description" : "按类型筛选",
+          "required" : false,
+          "type" : "integer",
+          "minimum" : 0,
+          "format" : "int32"
+        }, {
+          "name" : "only_trashed",
+          "in" : "query",
+          "description" : "查看已经删除的教室",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "返回筛选后的教室集合",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/rooms/roomItem"
+              }
+            }
+          },
+          "500" : {
+            "description" : "内部错误"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : { }
+}
