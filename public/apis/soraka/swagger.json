@@ -1,72 +1,209 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "数据中心 API 文档",
-    "version" : "1.0.0",
-    "title" : "数据中心项目 API 文档",
-    "contact" : {
-      "email" : "2013855675@qq.com"
+  "swagger": "2.0",
+  "info": {
+    "description": "数据中心 API 文档",
+    "version": "1.0.0",
+    "title": "数据中心 API 文档",
+    "contact": {
+      "email": "2013855675@qq.com"
     }
   },
-  "host" : "virtserver.swaggerhub.com",
-  "basePath" : "/wqer1019/soraka/1.0.0",
-  "tags" : [ {
-    "name" : "rooms",
-    "description" : "教室管理"
-  }, {
-    "name" : "class",
-    "description" : "班级管理"
-  }, {
-    "name" : "excel",
-    "description" : "导入导出"
-  } ],
-  "schemes" : [ "https", "http" ],
-  "paths" : {
-    "/rooms" : {
-      "get" : {
-        "tags" : [ "rooms" ],
-        "summary" : "获取教室数据",
-        "description" : "获取教室数据\n",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "college_id",
-          "in" : "query",
-          "description" : "按学院筛选",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "type_id",
-          "in" : "query",
-          "description" : "按类型筛选",
-          "required" : false,
-          "type" : "integer",
-          "minimum" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "only_trashed",
-          "in" : "query",
-          "description" : "查看已经删除的教室",
-          "required" : false,
-          "type" : "boolean"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "返回筛选后的教室集合",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/rooms/roomItem"
+  "host": "localhost:8080",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "rooms",
+      "description": "教室管理"
+    },
+    {
+      "name": "class",
+      "description": "班级管理"
+    },
+    {
+      "name": "excel",
+      "description": "导入导出"
+    }
+  ],
+  "paths": {
+    "/rooms": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "获取教室数据",
+        "description": "获取教室数据\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "按学院筛选",
+            "required": false,
+            "format": "integer32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "type_id",
+            "description": "按类型筛选",
+            "type": "integer",
+            "required": false,
+            "format": "integer32",
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "name": "only_trashed",
+            "description": "查看已经删除的教室",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的教室集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/roomItem"
               }
             }
           },
-          "500" : {
-            "description" : "内部错误"
+          "500": {
+            "description": "内部错误"
           }
         }
       }
     }
   },
-  "definitions" : { }
+  "definitions": {
+    "roomItem": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "capacity",
+        "college",
+        "type",
+        "remark",
+        "created_at",
+        "updated_at",
+        "deleted_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "integer32",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "A101"
+        },
+        "capacity": {
+          "type": "integer",
+          "example": 120
+        },
+        "remark": {
+          "type": "string",
+          "example": null
+        },
+        "college": {
+          "$ref": "#/definitions/collegeItem"
+        },
+        "type": {
+          "$ref": "#/definitions/typeItem"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "deleted_at": {
+          "type": "string",
+          "example": null
+        }
+      }
+    },
+    "typeItem": {
+      "required": [
+        "id",
+        "name",
+        "parent_id",
+        "created_at",
+        "updated_at",
+        "deleted_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "多媒体教室"
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": 0
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "deleted_at": {
+          "type": "string",
+          "example": null
+        }
+      }
+    },
+    "collegeItem": {
+      "required": [
+        "id",
+        "name",
+        "parent_id",
+        "created_at",
+        "updated_at",
+        "deleted_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "计算机学院"
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "deleted_at": {
+          "type": "string",
+          "example": null
+        }
+      }
+    }
+  }
 }

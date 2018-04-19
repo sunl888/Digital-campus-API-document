@@ -28,28 +28,4 @@ if [ "${BASE_API_URL}" ]; then
   sed -i "s|localhost:3000|${BASE_API_URL}|" $UI_FILE
 fi
 
-#if [[ -f $SWAGGER_JSON ]]; then
-#  #cp -s $SWAGGER_JSON $NGINX_ROOT
-#  REL_PATH="./$(basename $SWAGGER_JSON)"
-#  sed -i "s|http://petstore.swagger.io/v2/swagger.json|$REL_PATH|g" $INDEX_FILE
-#  sed -i "s|http://example.com/api|$REL_PATH|g" $INDEX_FILE
-#else
-#  sed -i "s|http://petstore.swagger.io/v2/swagger.json|$API_URL|g" $INDEX_FILE
-#  sed -i "s|http://example.com/api|$API_URL|g" $INDEX_FILE
-#fi
-
-#if [[ -n "$VALIDATOR_URL" ]]; then
-#  sed -i "s|.*validatorUrl:.*$||g" $INDEX_FILE
-#  TMP_VU="$VALIDATOR_URL"
-#  [[ "$VALIDATOR_URL" != "null" && "$VALIDATOR_URL" != "undefined" ]] && TMP_VU="\"${VALIDATOR_URL}\""
-#  sed -i "s|\(url: .*,\)|\1\n    validatorUrl: ${TMP_VU},|g" $INDEX_FILE
-#  unset TMP_VU
-#fi
-
-# replace `url` with `urls` option if API_URLS is set
-#if [[ -n "$API_URLS" ]]; then
-#    sed -i "s|url: .*,|urls: $API_URLS,|g" $INDEX_FILE
-#fi
-
-
 exec nginx -g 'daemon off;'
