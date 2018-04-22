@@ -22,10 +22,10 @@ replace_or_delete_in_index () {
   fi
 }
 
-if [ "${BASE_API_URL}" ]; then
-# sed -i 's/原字符串/新字符串/' /home/1.txt
-# /起定界符作用,可以用|等任何字符代替
-  sed -i "s|localhost:3000|${BASE_API_URL}|" $UI_FILE
-fi
+#if [ "${BASE_API_URL}" ]; then
+## sed -i 's/原字符串/新字符串/' /home/1.txt
+## /起定界符作用,可以用|等任何字符代替
+#  sed -i "s|localhost:8082|${BASE_API_URL}|" $UI_FILE
+#fi
 
 exec nginx -g 'daemon off;'

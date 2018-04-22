@@ -289,6 +289,79 @@
           }
         }
       }
+    },
+    "/excel/export/{tableName}": {
+      "get": {
+        "tags": [
+          "excel"
+        ],
+        "summary": "导出指定的表",
+        "description": "导出指定的表",
+        "produces": [
+          "application/vnd.ms-excel"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tableName",
+            "required": true,
+            "description": "表名",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "导出指定的表到excel文件",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/excel/import/{tableName}": {
+      "post": {
+        "tags": [
+          "excel"
+        ],
+        "summary": "导入指定的表",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "导入指定的表",
+        "produces": [
+          "application/vnd.ms-excel"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tableName",
+            "required": true,
+            "description": "表名",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "file",
+            "type": "file",
+            "description": "The file to upload."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "导入指定的表到数据库",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -299,6 +372,7 @@
         "name",
         "capacity",
         "college",
+        "college_str",
         "type",
         "remark",
         "created_at",
@@ -325,6 +399,11 @@
         },
         "college": {
           "$ref": "#/definitions/collegeItem"
+        },
+        "college_str": {
+          "type": "string",
+          "description": "学院/专业转成字符串的形式便于显示",
+          "example": "计算机学院计算机科学与技术专业"
         },
         "type": {
           "$ref": "#/definitions/typeItem"

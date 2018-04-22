@@ -4,8 +4,10 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    environment:
-      - BASE_API_URL=localhost:8082
+    volumes:
+      - ./public:/usr/share/nginx/html
+#    environment:
+#      - BASE_API_URL=localhost:8082
     ports:
       - "8082:80"
       - "8083:81"
