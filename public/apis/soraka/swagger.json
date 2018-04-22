@@ -25,6 +25,14 @@
     {
       "name": "excel",
       "description": "导入导出"
+    },
+    {
+      "name": "room_types",
+      "description": "教室类型"
+    },
+    {
+      "name": "colleges",
+      "description": "学院/专业(parent_id = 0|1 => 学院|专业)"
     }
   ],
   "paths": {
@@ -34,7 +42,7 @@
           "rooms"
         ],
         "summary": "获取教室数据",
-        "description": "获取教室数据\n",
+        "description": "获取教室数据",
         "produces": [
           "application/json"
         ],
@@ -43,7 +51,6 @@
             "in": "query",
             "name": "college_id",
             "description": "按学院筛选",
-            "required": false,
             "format": "integer32",
             "minimum": 0,
             "type": "integer"
@@ -53,7 +60,6 @@
             "name": "type_id",
             "description": "按类型筛选",
             "type": "integer",
-            "required": false,
             "format": "integer32",
             "minimum": 0
           },
@@ -71,6 +77,210 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/roomItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "添加教室",
+        "description": "添加教室",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "教室名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": true,
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "type_id",
+            "required": true,
+            "description": "教室类型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "capacity",
+            "required": true,
+            "description": "教室容量",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回创建成功的教室",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/roomItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/rooms/{room_Id}": {
+      "put": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "修改教室",
+        "description": "修改教室",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_Id",
+            "required": true,
+            "description": "教室ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "教室名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "type_id",
+            "description": "教室类型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "capacity",
+            "description": "教室容量",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回更新成功的教室",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/roomItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "删除教室",
+        "description": "删除教室",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_Id",
+            "required": true,
+            "description": "教室ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "返回 204 更新成功"
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/room_types": {
+      "get": {
+        "tags": [
+          "room_types"
+        ],
+        "summary": "获取教室类型",
+        "description": "获取教室类型",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回教室类型集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/roomTypeItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/colleges": {
+      "get": {
+        "tags": [
+          "colleges"
+        ],
+        "summary": "获取学院/专业",
+        "description": "获取学院/专业",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回所有的学院/专业集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/collegeItem"
               }
             }
           },
@@ -202,6 +412,36 @@
         "deleted_at": {
           "type": "string",
           "example": null
+        }
+      }
+    },
+    "roomTypeItem": {
+      "required": [
+        "id",
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "普通教室|多媒体教室|..."
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
         }
       }
     }
