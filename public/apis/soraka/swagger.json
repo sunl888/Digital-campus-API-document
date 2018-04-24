@@ -33,6 +33,9 @@
     {
       "name": "colleges",
       "description": "学院/专业(parent_id = 0|1 => 学院|专业)"
+    },
+    {
+      "name": "terms"
     }
   ],
   "paths": {
@@ -362,6 +365,225 @@
           }
         }
       }
+    },
+    "/terms": {
+      "get": {
+        "tags": [
+          "terms"
+        ],
+        "summary": "获取学期信息列表",
+        "description": "获取学期信息列表",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回学期信息集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/termItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "terms"
+        ],
+        "summary": "添加学期信息",
+        "description": "添加学期信息",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "description": "学期名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "semester",
+            "description": "第几学期（1、2）",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_of_school",
+            "description": "开学日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "holiday",
+            "description": "放假日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "is_current",
+            "description": "是否为当前日期(0、1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回创建完成后的学期信息",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/termItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      }
+    },
+    "/terms/{id}": {
+      "get": {
+        "tags": [
+          "terms"
+        ],
+        "summary": "获取某个学期信息",
+        "description": "获取某个学期信息",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "学期 ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回具体某个学期信息",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/termItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "terms"
+        ],
+        "summary": "修改学期信息",
+        "description": "修改学期信息",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "学期 ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "学期名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "semester",
+            "description": "第几学期（1、2）",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_of_school",
+            "description": "开学日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "holiday",
+            "description": "放假日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "is_current",
+            "description": "是否为当前日期(0、1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回修改后的学期信息",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/termItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "terms"
+        ],
+        "summary": "删除学期",
+        "description": "删除学期",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "学期 ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "删除成功"
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -521,6 +743,62 @@
         "updated_at": {
           "type": "string",
           "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "termItem": {
+      "required": [
+        "id",
+        "creator_id",
+        "name",
+        "semester",
+        "date_of_school",
+        "holiday",
+        "is_current",
+        "remark",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "creator_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "2017~2018"
+        },
+        "semester": {
+          "type": "integer",
+          "example": "1|2"
+        },
+        "date_of_school": {
+          "type": "string",
+          "example": "2018-04-23T00:00:00.000Z"
+        },
+        "holiday": {
+          "type": "string",
+          "example": "2018-04-23T00:00:00.000Z"
+        },
+        "is_current": {
+          "type": "boolean",
+          "example": 1
+        },
+        "remark": {
+          "type": "string",
+          "example": "我是备注"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 18:09:20"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 18:09:20"
         }
       }
     }
