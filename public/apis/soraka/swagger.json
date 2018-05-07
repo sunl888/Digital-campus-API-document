@@ -35,7 +35,12 @@
       "description": "学院/专业(parent_id = 0|1 => 学院|专业)"
     },
     {
-      "name": "terms"
+      "name": "teachers",
+      "description": "教師管理"
+    },
+    {
+      "name": "terms",
+      "description": "學期管理"
     }
   ],
   "paths": {
@@ -150,6 +155,39 @@
       }
     },
     "/rooms/{room_Id}": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "获取指定教室数据",
+        "description": "获取指定教室数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_Id",
+            "required": true,
+            "description": "教室ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的教室集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/roomItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
       "put": {
         "tags": [
           "rooms"
@@ -293,22 +331,22 @@
         }
       }
     },
-    "/excel/export/{tableName}": {
+    "/excel/export/{modelName}": {
       "get": {
         "tags": [
           "excel"
         ],
-        "summary": "导出指定的表",
-        "description": "导出指定的表",
+        "summary": "导出指定的Model",
+        "description": "导出指定的Model",
         "produces": [
           "application/vnd.ms-excel"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "tableName",
+            "name": "modelName",
             "required": true,
-            "description": "表名",
+            "description": "Model名",
             "type": "string"
           }
         ],
@@ -325,25 +363,25 @@
         }
       }
     },
-    "/excel/import/{tableName}": {
+    "/excel/import/{modelName}": {
       "post": {
         "tags": [
           "excel"
         ],
-        "summary": "导入指定的表",
+        "summary": "导入指定的Model",
         "consumes": [
           "multipart/form-data"
         ],
-        "description": "导入指定的表",
+        "description": "导入指定的Model",
         "produces": [
           "application/vnd.ms-excel"
         ],
         "parameters": [
           {
             "in": "path",
-            "name": "tableName",
+            "name": "modelName",
             "required": true,
-            "description": "表名",
+            "description": "Model名",
             "type": "string"
           },
           {
@@ -355,7 +393,7 @@
         ],
         "responses": {
           "204": {
-            "description": "导入指定的表到数据库",
+            "description": "导入指定的Model到数据库",
             "schema": {
               "type": "file"
             }
@@ -584,9 +622,267 @@
           }
         }
       }
-    }
+    },
+    "/class": {
+      "get": {
+        "tags": [
+          "class"
+        ],
+        "summary": "获取班級数据",
+        "description": "获取班級数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "按学院筛选",
+            "format": "integer32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "only_trashed",
+            "description": "查看已经删除的教室",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的教室集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/classItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "class"
+        ],
+        "summary": "添加班級",
+        "description": "添加班級",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "班級名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": true,
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "teacher_id",
+            "required": true,
+            "description": "教師ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "default_room_id",
+            "required": true,
+            "description": "默認教室ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "length_of_schooling",
+            "required": true,
+            "description": "学制：4|5|6",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回创建成功的班級",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/classItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/class/{class_Id}": {
+      "get": {
+        "tags": [
+          "class"
+        ],
+        "summary": "获取指定班級数据",
+        "description": "获取指定班級数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "class_Id",
+            "required": true,
+            "description": "班級ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的班級集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/classItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "class"
+        ],
+        "summary": "修改",
+        "description": "修改教室",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "class_Id",
+            "required": true,
+            "description": "班級ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "班級名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "teacher_id",
+            "description": "教師ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "default_room",
+            "description": "默認教室",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "length_of_schooling",
+            "description": "學制",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回更新成功的班級",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/classItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "class"
+        ],
+        "summary": "删除班級",
+        "description": "删除班級",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "class_Id",
+            "required": true,
+            "description": "班級ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "刪除成功",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/deletedItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    
   },
   "definitions": {
+    "deletedItem": {
+      "type": "object",
+      "required": [
+        "isDeleted"
+      ],
+      "properties": {
+        "isDeleted": {
+          "type": "string",
+          "example": true
+        }
+      }
+    },
     "roomItem": {
       "type": "object",
       "required": [
@@ -597,6 +893,7 @@
         "college_str",
         "type",
         "remark",
+        "creator",
         "created_at",
         "updated_at",
         "deleted_at"
@@ -629,6 +926,9 @@
         },
         "type": {
           "$ref": "#/definitions/typeItem"
+        },
+        "creator": {
+          "$ref": "#/definitions/userItem"
         },
         "created_at": {
           "type": "string",
@@ -799,6 +1099,263 @@
         "updated_at": {
           "type": "string",
           "example": "2018-04-18 18:09:20"
+        }
+      }
+    },
+    "teacherItem": {
+      "required": [
+        "id",
+        "name",
+        "sex",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "姓名",
+          "example": "張三"
+        },
+        "sex": {
+          "type": "string",
+          "description": "年齡",
+          "example": "男"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "userItem": {
+      "required": [
+        "id",
+        "name",
+        "email",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "admin"
+        },
+        "email": {
+          "type": "string",
+          "example": "admin@email.com"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "classItem": {
+      "required": [
+        "id",
+        "name",
+        "college",
+        "teacher",
+        "default_room",
+        "length_of_schooling",
+        "creator",
+        "remark",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "A101|A102|B101|B102.."
+        },
+        "length_of_schooling": {
+          "type": "integer",
+          "example": 10
+        },
+        "college": {
+          "$ref": "#/definitions/collegeItem"
+        },
+        "creator": {
+          "$ref": "#/definitions/userItem"
+        },
+        "teacher": {
+          "$ref": "#/definitions/teacherItem"
+        },
+        "default_room": {
+          "$ref": "#/definitions/roomItem"
+        },
+        "remark": {
+          "type": "string",
+          "example": "我是备注"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 18:09:20"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 18:09:20"
+        }
+      }
+    },
+    "incumbentTitleItem": {
+      "required": [
+        "id",
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "职称",
+          "example": "教授"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "academicQualificationItem": {
+      "required": [
+        "id",
+        "name",
+        "academic_code",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "职称",
+          "example": "教授"
+        },
+        "academic_code": {
+          "type": "string",
+          "description": "学历代码",
+          "example": "0231342"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "idCardTypeItem": {
+      "required": [
+        "id",
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "身份證件類型",
+          "example": "中华人民共和国居民身份证"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "politicalOutlookItem": {
+      "required": [
+        "id",
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "政治面貌",
+          "example": "黨員"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "nationItem": {
+      "required": [
+        "id",
+        "name",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "description": "民族",
+          "example": "漢族"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "2018-04-18 13:46:11"
         }
       }
     }
