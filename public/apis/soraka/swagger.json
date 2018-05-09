@@ -868,7 +868,407 @@
         }
       }
     },
-    
+    "/teachers": {
+      "get": {
+        "tags": [
+          "teachers"
+        ],
+        "summary": "獲取教師數據",
+        "description": "獲取教師數據",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "按学院筛选",
+            "format": "integer32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "nation_id",
+            "description": "按民族筛选",
+            "format": "integer32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "only_trashed",
+            "description": "查看已经删除的教師",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的教師集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/teacherItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "teachers"
+        ],
+        "summary": "添加教師",
+        "description": "添加教師",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "教師姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": true,
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "required": true,
+            "description": "年齡",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "nation_id",
+            "required": true,
+            "description": "民族ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "place_of_origin",
+            "required": true,
+            "description": "籍貫",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "id_card_type_id",
+            "required": true,
+            "description": "身份證件類型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "identification_number",
+            "required": true,
+            "description": "身份證件",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "required": false,
+            "description": "手機號碼",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_of_birth",
+            "required": true,
+            "description": "出生日期(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "work_time",
+            "description": "工作年限",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "political_outlook_id",
+            "description": "政治面貌ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "time_to_join_the_party",
+            "description": "入黨時間(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_of_graduation",
+            "description": "畢業時間(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "graduate_institution",
+            "description": "畢業院校",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "major_degree",
+            "description": "畢業時所學專業",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "academic_qualification_id",
+            "description": "學歷情況ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "incumbent_title_id",
+            "description": "現任職稱ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回创建成功的教師",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/teacherItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/teachers/{teacher_id}": {
+      "get": {
+        "tags": [
+          "teachers"
+        ],
+        "summary": "获取指定教師数据",
+        "description": "获取指定教師数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teacher_id",
+            "required": true,
+            "description": "教師ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的教師集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/teacherItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "teachers"
+        ],
+        "summary": "修改教師",
+        "description": "修改教師",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teacher_id",
+            "required": true,
+            "description": "教師ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "教師姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "description": "年齡",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "nation_id",
+            "description": "民族ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "place_of_origin",
+            "description": "籍貫",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "id_card_type_id",
+            "description": "身份證件類型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "identification_number",
+            "description": "身份證件",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "description": "手機號碼",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_of_birth",
+            "description": "出生日期(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "work_time",
+            "description": "工作年限",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "political_outlook_id",
+            "description": "政治面貌ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "time_to_join_the_party",
+            "description": "入黨時間(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_of_graduation",
+            "description": "畢業時間(2018-01-01)",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "graduate_institution",
+            "description": "畢業院校",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "major_degree",
+            "description": "畢業時所學專業",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "academic_qualification_id",
+            "description": "學歷情況ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "incumbent_title_id",
+            "description": "現任職稱ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "remark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回更新成功的教師",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/teacherItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "teachers"
+        ],
+        "summary": "删除教師",
+        "description": "删除教師",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teacher_id",
+            "required": true,
+            "description": "教師ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "刪除成功",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/deletedItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    }
   },
   "definitions": {
     "deletedItem": {
@@ -1107,6 +1507,7 @@
         "id",
         "name",
         "sex",
+        "nation",
         "created_at",
         "updated_at"
       ],
@@ -1120,10 +1521,87 @@
           "description": "姓名",
           "example": "張三"
         },
+        "job_number": {
+          "type": "string",
+          "description": "工號",
+          "example": "112012"
+        },
         "sex": {
           "type": "string",
           "description": "年齡",
           "example": "男"
+        },
+        "nation": {
+          "$ref": "#/definitions/nationItem",
+          "description": "民族"
+        },
+        "place_of_origin": {
+          "type": "string",
+          "description": "籍貫",
+          "example": "安徽省安慶市"
+        },
+        "phone_number": {
+          "type": "string",
+          "description": "手機號碼",
+          "example": "15705547512"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "description": "出生日期",
+          "example": "2017-01-01"
+        },
+        "time_to_join_the_party": {
+          "type": "string",
+          "description": "入黨日期",
+          "example": "2017-01-01"
+        },
+        "date_of_graduation": {
+          "type": "string",
+          "description": "畢業日期",
+          "example": "2017-01-01"
+        },
+        "graduate_institution": {
+          "type": "string",
+          "description": "畢業院校",
+          "example": "淮南師範學院"
+        },
+        "major_degree": {
+          "type": "string",
+          "description": "毕业时所学专业",
+          "example": "網絡工程"
+        },
+        "work_time": {
+          "type": "integer",
+          "description": "工作年限",
+          "example": "20"
+        },
+        "id_card_type": {
+          "$ref": "#/definitions/idCardTypeItem",
+          "description": "身份證件類型"
+        },
+        "academic_qualification": {
+          "$ref": "#/definitions/academicQualificationItem",
+          "description": "學歷情況"
+        },
+        "political_outlook": {
+          "$ref": "#/definitions/politicalOutlookItem",
+          "description": "政治面貌"
+        },
+        "incumbent_title": {
+          "$ref": "#/definitions/incumbentTitleItem",
+          "description": "現任職稱"
+        },
+        "identification_number": {
+          "type": "string",
+          "description": "身份證件號碼",
+          "example": "340881199507178533"
+        },
+        "college": {
+          "$ref": "#/definitions/collegeItem",
+          "description": "所屬專業"
+        },
+        "creator": {
+          "$ref": "#/definitions/userItem"
         },
         "created_at": {
           "type": "string",
