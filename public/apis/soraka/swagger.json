@@ -346,7 +346,7 @@
             "in": "path",
             "name": "modelName",
             "required": true,
-            "description": "Model名",
+            "description": "支持導出的Models: rooms,colleges",
             "type": "string"
           }
         ],
@@ -381,7 +381,7 @@
             "in": "path",
             "name": "modelName",
             "required": true,
-            "description": "Model名",
+            "description": "支持導入的Models: rooms",
             "type": "string"
           },
           {
