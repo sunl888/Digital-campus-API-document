@@ -8,7 +8,7 @@
       "email": "2013855675@qq.com"
     }
   },
-  "host": "localhost:8080",
+  "host": "soraka.io",
   "basePath": "/api",
   "schemes": [
     "http"
@@ -41,6 +41,10 @@
     {
       "name": "terms",
       "description": "學期管理"
+    },
+    {
+      "name": "students",
+      "description": "学生管理"
     }
   ],
   "paths": {
@@ -1268,6 +1272,609 @@
           }
         }
       }
+    },
+    "/students": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "获取学生数据",
+        "description": "获取学生数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "type": "integer",
+            "name": "college_id",
+            "description": "按学院筛选",
+            "format": "integer32",
+            "minimum": 0
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回筛选后的学生集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/studentItem"
+              }
+            }
+          },
+          "500": {
+            "description": "程序内部出错"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "students"
+        ],
+        "summary": "添加学生",
+        "description": "添加学生",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "student_number",
+            "description": "学号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "required": true,
+            "description": "性别(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_of_birth",
+            "required": true,
+            "description": "出生日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "nation_id",
+            "required": true,
+            "description": "民族ID(1)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "household_type_id",
+            "required": true,
+            "description": "户口性质ID(14)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "id_card_type_id",
+            "required": true,
+            "description": "身份证件类型(8)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "identification_number",
+            "required": true,
+            "description": "身份证件号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "political_outlook_id",
+            "description": "政治面貌ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "description": "手机号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "classes_id",
+            "description": "班级ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "is_residence",
+            "description": "是否住校(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_admission",
+            "description": "入学日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "length_schooling_type_id",
+            "description": "学年制ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "teacher_id",
+            "description": "班主任ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "feder_school",
+            "description": "生源学校",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "register_number",
+            "required": true,
+            "description": "学籍号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "place_of_origin",
+            "description": "籍贯",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "zip_code",
+            "description": "邮编",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "family_address",
+            "description": "家庭地址",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "qq_number",
+            "description": "QQ号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "parents_name",
+            "description": "家长姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "parents_contact",
+            "description": "家长联系方式",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "home_phone",
+            "description": "家庭号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "home_address",
+            "description": "家庭地址",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "support_card_number",
+            "description": "资助卡号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "leave_school_time",
+            "description": "离校时间",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "student_type_id",
+            "description": "学生类型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "junior_high_school_type_id",
+            "description": "生源类别",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "health_status_type_id",
+            "description": "健康状况ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "family_economic_type_id",
+            "description": "家庭经济情况Id",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "school_graduation_time",
+            "description": "原学校毕业时间",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "registered_residence",
+            "description": "户口所在地",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "is_archives_poor_households",
+            "description": "是否建档立卡贫困户(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "ramark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回创建完成后的学生信息",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/studentItem"
+              }
+            }
+          },
+          "500": {
+            "description": "程序内部出错"
+          }
+        }
+      }
+    },
+    "/students/{student_id}": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "获取指定学生数据",
+        "description": "获取指定学生数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "required": true,
+            "description": "学生ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回学生信息",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/studentItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "students"
+        ],
+        "summary": "修改学生信息",
+        "description": "修改学生信息",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "description": "学生ID",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "student_number",
+            "description": "学号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "description": "性别(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_of_birth",
+            "description": "出生日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "nation_id",
+            "description": "民族ID(1)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "household_type_id",
+            "description": "户口性质ID(14)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "id_card_type_id",
+            "description": "身份证件类型(8)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "identification_number",
+            "description": "身份证件号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "political_outlook_id",
+            "description": "政治面貌ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "description": "手机号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "description": "专业ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "classes_id",
+            "description": "班级ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "is_residence",
+            "description": "是否住校(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "date_admission",
+            "description": "入学日期",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "length_schooling_type_id",
+            "description": "学年制ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "teacher_id",
+            "description": "班主任ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "feder_school",
+            "description": "生源学校",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "register_number",
+            "description": "学籍号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "place_of_origin",
+            "description": "籍贯",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "zip_code",
+            "description": "邮编",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "family_address",
+            "description": "家庭地址",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "qq_number",
+            "description": "QQ号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "parents_name",
+            "description": "家长姓名",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "parents_contact",
+            "description": "家长联系方式",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "home_phone",
+            "description": "家庭号码",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "home_address",
+            "description": "家庭地址",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "support_card_number",
+            "description": "资助卡号",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "leave_school_time",
+            "description": "离校时间",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "student_type_id",
+            "description": "学生类型ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "junior_high_school_type_id",
+            "description": "生源类别",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "health_status_type_id",
+            "description": "健康状况ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "family_economic_type_id",
+            "description": "家庭经济情况Id",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "school_graduation_time",
+            "description": "原学校毕业时间",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "registered_residence",
+            "description": "户口所在地",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "is_archives_poor_households",
+            "description": "是否建档立卡贫困户(0,1即可)",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "ramark",
+            "description": "备注",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回更新后的学生数据",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/studentItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "students"
+        ],
+        "summary": "删除学生信息",
+        "description": "删除学生信息",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "required": true,
+            "description": "学生ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "删除成功",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/deletedItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部出错"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1834,6 +2441,309 @@
         "updated_at": {
           "type": "string",
           "example": "2018-04-18 13:46:11"
+        }
+      }
+    },
+    "studentItem": {
+      "required": [
+        "id",
+        "name",
+        "sex",
+        "nation_id",
+        "household_type_id",
+        "id_card_type_id",
+        "identification_number",
+        "register_number",
+        "place_of_origin"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 5
+        },
+        "name": {
+          "type": "string",
+          "description": "姓名",
+          "example": "王二"
+        },
+        "student_number": {
+          "type": "string",
+          "description": "学号",
+          "example": "1508220214"
+        },
+        "sex": {
+          "type": "string",
+          "description": "性别",
+          "example": "男"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "description": "性别",
+          "example": "2018-02-02"
+        },
+        "nation": {
+          "$ref": "#/definitions/nationItem",
+          "description": "民族"
+        },
+        "household_type": {
+          "type": "object",
+          "description": "户口性质",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 14
+            },
+            "name": {
+              "type": "string",
+              "description": "农村户口",
+              "example": "农村户口"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "13"
+            }
+          }
+        },
+        "id_card_type": {
+          "type": "object",
+          "description": "身份证件类型",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 8
+            },
+            "name": {
+              "type": "string",
+              "description": "中华人民共和国居民身份证",
+              "example": "中华人民共和国居民身份证"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "7"
+            }
+          }
+        },
+        "identification_number": {
+          "type": "string",
+          "description": "身份证件号码",
+          "example": "333333315390936335"
+        },
+        "political_outlook": {
+          "$ref": "#/definitions/politicalOutlookItem",
+          "description": "政治面貌"
+        },
+        "phone_number": {
+          "type": "string",
+          "description": "手机号码",
+          "example": "15755428888"
+        },
+        "college": {
+          "$ref": "#/definitions/collegeItem",
+          "description": "学院(系)"
+        },
+        "classes": {
+          "$ref": "#/definitions/classItem",
+          "description": "班级"
+        },
+        "is_residence": {
+          "type": "string",
+          "description": "是否住校",
+          "example": "住校"
+        },
+        "date_admission": {
+          "type": "string",
+          "description": "入学日期",
+          "example": "2017-02-02"
+        },
+        "length_schooling": {
+          "type": "object",
+          "description": "学年制",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 17
+            },
+            "name": {
+              "type": "string",
+              "description": "三年制",
+              "example": "三年制"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "16"
+            }
+          }
+        },
+        "teacher": {
+          "$ref": "#/definitions/teacherItem",
+          "description": "班主任(老师)"
+        },
+        "feeder_school": {
+          "type": "string",
+          "description": "生源学校",
+          "example": "三中"
+        },
+        "register_number": {
+          "type": "string",
+          "description": "学籍号",
+          "example": "444444186472869812"
+        },
+        "place_of_origin": {
+          "type": "string",
+          "description": "籍贯",
+          "example": "安徽宿州"
+        },
+        "zip_code": {
+          "type": "string",
+          "description": "邮编",
+          "example": "234000"
+        },
+        "family_address": {
+          "type": "string",
+          "description": "家庭地址",
+          "example": "安徽省宿州市灵璧县"
+        },
+        "qq_number": {
+          "type": "string",
+          "description": "QQ账号",
+          "example": "66666666"
+        },
+        "parents_name": {
+          "type": "string",
+          "description": "家长姓名",
+          "example": "张三"
+        },
+        "parents_contact": {
+          "type": "string",
+          "description": "家长联系方式",
+          "example": "13755555555"
+        },
+        "home_phone": {
+          "type": "string",
+          "description": "家庭电话",
+          "example": "66666666"
+        },
+        "home_address": {
+          "type": "string",
+          "description": "家庭地址",
+          "example": "安徽省宿州市灵璧县"
+        },
+        "support_card_number": {
+          "type": "string",
+          "description": "资助卡号",
+          "example": "55555534706209332"
+        },
+        "leave_school_time": {
+          "type": "string",
+          "description": "离校时间",
+          "example": "2018-02-02"
+        },
+        "student_type": {
+          "type": "object",
+          "description": "学生类型(全日制,走读)",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 21
+            },
+            "name": {
+              "type": "string",
+              "description": "全日制",
+              "example": "全日制"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "19"
+            }
+          }
+        },
+        "junior_high_school_type": {
+          "type": "object",
+          "description": "生源类别",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 24
+            },
+            "name": {
+              "type": "string",
+              "description": "初中历届",
+              "example": "初中历届"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "22"
+            }
+          }
+        },
+        "health_status": {
+          "type": "object",
+          "description": "健康状况",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 26
+            },
+            "name": {
+              "type": "string",
+              "description": "健康",
+              "example": "健康"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "25"
+            }
+          }
+        },
+        "family_economic": {
+          "type": "object",
+          "description": "家庭经济情况",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 31
+            },
+            "name": {
+              "type": "string",
+              "description": "富裕家庭",
+              "example": "富裕家庭"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "类型的父类ID",
+              "example": "30"
+            }
+          }
+        },
+        "school_graduation_time": {
+          "type": "string",
+          "description": "原学校毕业时间",
+          "example": "2018-02-02"
+        },
+        "registered_residence": {
+          "type": "string",
+          "description": "户口所在地",
+          "example": "安徽省宿州市灵璧县"
+        },
+        "is_archives_poor_households": {
+          "type": "string",
+          "description": "是否建档立卡",
+          "example": "建立"
+        },
+        "remark": {
+          "type": "string",
+          "description": "备注",
+          "example": "我是超级备注"
+        },
+        "creator": {
+          "$ref": "#/definitions/userItem",
+          "description": "创建者"
         }
       }
     }
