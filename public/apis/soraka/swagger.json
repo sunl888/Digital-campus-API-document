@@ -27,8 +27,8 @@
       "description": "导入导出"
     },
     {
-      "name": "room_types",
-      "description": "教室类型"
+      "name": "types",
+      "description": "类型"
     },
     {
       "name": "colleges",
@@ -152,6 +152,33 @@
             "description": "内部错误"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "删除教室",
+        "description": "删除教室",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "room_ids",
+            "required": true,
+            "description": "教室ID數組或者id\n\n注意: 這裡可以這樣刪除多個班級: room_ids[0]=1&room_ids[1]=2\n也可以這樣刪除單個班級room_ids=1",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "刪除成功"
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
       }
     },
     "/rooms/{room_Id}": {
@@ -250,52 +277,25 @@
             "description": "内部错误"
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "rooms"
-        ],
-        "summary": "删除教室",
-        "description": "删除教室",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "room_Id",
-            "required": true,
-            "description": "教室ID",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "返回 204 更新成功"
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
       }
     },
-    "/room_types": {
+    "/types": {
       "get": {
         "tags": [
-          "room_types"
+          "types"
         ],
-        "summary": "获取教室类型",
-        "description": "获取教室类型",
+        "summary": "获取类型",
+        "description": "返回指定的类型集合\n允許的類型:room_type,setting_type,id_card_type",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
-            "description": "返回教室类型集合",
+            "description": "返回指定的类型集合\n允許的類型:room_type,setting_type,id_card_type",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/roomTypeItem"
+                "$ref": "#/definitions/typeItem"
               }
             }
           },
@@ -730,6 +730,38 @@
             "description": "内部错误"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "class"
+        ],
+        "summary": "删除班級",
+        "description": "删除班級",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "classes_ids",
+            "required": true,
+            "description": "班級ID數組或者單個id\n\n注意: 這裡可以這樣刪除多個班級: classes_ids[0]=1&classes_ids[1]=2\n也可以這樣刪除單個班級classes_ids=1",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "刪除成功",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/deletedItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
       }
     },
     "/class/{class_Id}": {
@@ -827,38 +859,6 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/classItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "class"
-        ],
-        "summary": "删除班級",
-        "description": "删除班級",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "class_Id",
-            "required": true,
-            "description": "班級ID",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "刪除成功",
-            "schema": {
-              "items": {
-                "$ref": "#/definitions/deletedItem"
               }
             }
           },
@@ -1348,6 +1348,7 @@
       "required": [
         "id",
         "name",
+        "description",
         "parent_id",
         "created_at",
         "updated_at",
@@ -1360,11 +1361,15 @@
         },
         "name": {
           "type": "string",
-          "example": "多媒体教室"
+          "example": "類型名稱"
         },
         "parent_id": {
           "type": "integer",
           "example": 0
+        },
+        "description": {
+          "type": "string",
+          "example": "描述"
         },
         "created_at": {
           "type": "string",
@@ -1528,7 +1533,7 @@
         },
         "sex": {
           "type": "string",
-          "description": "年齡",
+          "description": "性別",
           "example": "男"
         },
         "nation": {
@@ -1576,7 +1581,7 @@
           "example": "20"
         },
         "id_card_type": {
-          "$ref": "#/definitions/idCardTypeItem",
+          "$ref": "#/definitions/typeItem",
           "description": "身份證件類型"
         },
         "academic_qualification": {
