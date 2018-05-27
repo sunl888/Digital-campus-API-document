@@ -862,6 +862,48 @@
         }
       }
     },
+    "/class/name_is_unique/{field}/{value}": {
+      "get": {
+        "tags": [
+          "class"
+        ],
+        "summary": "判斷指定字段是否唯一",
+        "description": "判斷指定字段是否唯一",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field",
+            "required": true,
+            "description": "需要驗證的字段名",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "description": "需要驗證的字段值",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回驗證結果",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fieldIsUniqueItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
     "/teachers": {
       "get": {
         "tags": [
@@ -2926,6 +2968,24 @@
         "name": {
           "type": "string",
           "example": "普通教师"
+        }
+      }
+    },
+    "fieldIsUniqueItem": {
+      "required": [
+        "is_allowed_verify",
+        "is_unique"
+      ],
+      "properties": {
+        "is_allowed_verify": {
+          "type": "bool",
+          "example": true,
+          "description":"給定的字段是否允許驗證唯一性"
+        },
+        "is_unique": {
+          "type": "bool",
+          "example": true,
+          "description":"給定的字段是否唯一"
         }
       }
     }
