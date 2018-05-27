@@ -8,7 +8,7 @@
       "email": "2013855675@qq.com"
     }
   },
-  "host": "soraka.io",
+  "host": "localhost:8080",
   "basePath": "/api",
   "schemes": [
     "http"
@@ -283,7 +283,7 @@
         }
       }
     },
-    "/types": {
+    "/child_types": {
       "get": {
         "tags": [
           "types"
@@ -292,6 +292,15 @@
         "description": "返回指定的类型集合\n允許的類型:room_type,setting_type,id_card_type",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "類型名稱",
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
