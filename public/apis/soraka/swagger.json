@@ -8,7 +8,7 @@
       "email": "2013855675@qq.com"
     }
   },
-  "host": "soraka.io",
+  "host": "localhost:8080",
   "basePath": "/api",
   "schemes": [
     "http"
@@ -25,10 +25,6 @@
     {
       "name": "excel",
       "description": "导入导出"
-    },
-    {
-      "name": "room_types",
-      "description": "教室类型"
     },
     {
       "name": "colleges",
@@ -296,32 +292,6 @@
         "responses": {
           "204": {
             "description": "返回 204 更新成功"
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      }
-    },
-    "/room_types": {
-      "get": {
-        "tags": [
-          "room_types"
-        ],
-        "summary": "获取教室类型",
-        "description": "获取教室类型",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "返回教室类型集合",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/roomTypeItem"
-              }
-            }
           },
           "500": {
             "description": "内部错误"
@@ -2504,8 +2474,8 @@
         },
         "name": {
           "type": "string",
-          "description": "职称",
-          "example": "教授"
+          "description": "學歷",
+          "example": "博士"
         },
         "academic_code": {
           "type": "string",
