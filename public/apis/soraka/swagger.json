@@ -299,6 +299,55 @@
         }
       }
     },
+    "/rooms/field_is_unique/{field}/{value}/{ignoreKey}": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "判斷指定字段是否唯一",
+        "description": "判斷指定字段是否唯一",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field",
+            "required": true,
+            "description": "需要驗證的字段名",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "description": "需要驗證的字段值",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ignoreKey",
+            "required": false,
+            "description": "忽略指定的id(一般更新數據時驗證唯一性需要傳自身的id過來以便後端忽略自身)",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回驗證結果",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fieldIsUniqueItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
     "/colleges": {
       "get": {
         "tags": [
@@ -862,7 +911,7 @@
         }
       }
     },
-    "/class/name_is_unique/{field}/{value}": {
+    "/class/field_is_unique/{field}/{value}/{ignoreKey}": {
       "get": {
         "tags": [
           "class"
@@ -886,6 +935,13 @@
             "required": true,
             "description": "需要驗證的字段值",
             "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ignoreKey",
+            "required": false,
+            "description": "忽略指定的id(一般更新數據時驗證唯一性需要傳自身的id過來以便後端忽略自身)",
+            "type": "integer"
           }
         ],
         "responses": {
