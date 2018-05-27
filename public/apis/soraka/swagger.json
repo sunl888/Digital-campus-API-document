@@ -51,8 +51,12 @@
       "description": "民族"
     },
     {
-      "name": null,
+      "name": "political_outlooks",
       "description": "政治面貌"
+    },
+    {
+      "name": "child_types",
+      "description": "指定类型下的子类型列表"
     }
   ],
   "paths": {
@@ -1935,6 +1939,41 @@
           }
         }
       }
+    },
+    "/child_types": {
+      "get": {
+        "tags": [
+          "child_types"
+        ],
+        "summary": "获取指定类型下的子类型列表",
+        "description": "获取指定类型下的子类型列表",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "required": true,
+            "description": "类型name[room_type(教室类型),setting_type(配置类型),id_card_type(身份证件类型),household_type(户口性质),length_schooling_type(学年制),student_type(学生类型),junior_high_school_type(生源类别),health_status_type(健康状况),family_economic_type(家庭经济情况)]",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回指定类型下的子类型列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/childTypeItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -2804,6 +2843,22 @@
         "creator": {
           "$ref": "#/definitions/userItem",
           "description": "创建者"
+        }
+      }
+    },
+    "childTypeItem": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "中共党员"
         }
       }
     }
