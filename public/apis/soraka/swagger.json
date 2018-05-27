@@ -57,6 +57,14 @@
     {
       "name": "child_types",
       "description": "指定类型下的子类型列表"
+    },
+    {
+      "name": "academic_qualification",
+      "description": "学历信息列表"
+    },
+    {
+      "name": "incumbent_title",
+      "description": "职称信息列表"
     }
   ],
   "paths": {
@@ -1435,7 +1443,7 @@
           },
           {
             "in": "query",
-            "name": "feder_school",
+            "name": "feeder_school",
             "description": "生源学校",
             "type": "string"
           },
@@ -1721,7 +1729,7 @@
           },
           {
             "in": "query",
-            "name": "feder_school",
+            "name": "feeder_school",
             "description": "生源学校",
             "type": "string"
           },
@@ -1966,6 +1974,58 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/childTypeItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/academic_qualification": {
+      "get": {
+        "tags": [
+          "incumbent_title"
+        ],
+        "summary": "获取学历信息列表",
+        "description": "获取学历信息列表",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回学历信息列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/academicQuaItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/incumbent_title": {
+      "get": {
+        "tags": [
+          "academic_qualification"
+        ],
+        "summary": "获取职称信息列表",
+        "description": "获取职称信息列表",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回职称信息列表",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/incumbentItem"
               }
             }
           },
@@ -2859,6 +2919,43 @@
         "name": {
           "type": "string",
           "example": "中共党员"
+        }
+      }
+    },
+    "academicQuaItem": {
+      "required": [
+        "id",
+        "name",
+        "academic_code"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "博士研究生毕业"
+        },
+        "academic_code": {
+          "type": "integer",
+          "example": 123
+        }
+      }
+    },
+    "incumbentItem": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "普通教师"
         }
       }
     }
