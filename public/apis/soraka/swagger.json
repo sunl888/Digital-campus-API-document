@@ -1435,7 +1435,7 @@
           },
           {
             "in": "query",
-            "name": "feder_school",
+            "name": "feeder_school",
             "description": "生源学校",
             "type": "string"
           },
@@ -1721,7 +1721,7 @@
           },
           {
             "in": "query",
-            "name": "feder_school",
+            "name": "feeder_school",
             "description": "生源学校",
             "type": "string"
           },
