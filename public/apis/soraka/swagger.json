@@ -8,7 +8,7 @@
       "email": "2013855675@qq.com"
     }
   },
-  "host": "soraka.io",
+  "host": "localhost:8080",
   "basePath": "/api",
   "schemes": [
     "http"
@@ -25,10 +25,6 @@
     {
       "name": "excel",
       "description": "导入导出"
-    },
-    {
-      "name": "room_types",
-      "description": "教室类型"
     },
     {
       "name": "colleges",
@@ -57,10 +53,6 @@
     {
       "name": "child_types",
       "description": "指定类型下的子类型列表"
-    },
-    {
-      "name": "types",
-      "description": "类型管理"
     },
     {
       "name": "academic_qualification",
@@ -307,23 +299,46 @@
         }
       }
     },
-    "/room_types": {
+    "/rooms/field_is_unique/{field}/{value}/{ignoreKey}": {
       "get": {
         "tags": [
-          "room_types"
+          "rooms"
         ],
-        "summary": "获取教室类型",
-        "description": "获取教室类型",
+        "summary": "判斷指定字段是否唯一",
+        "description": "判斷指定字段是否唯一",
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field",
+            "required": true,
+            "description": "需要驗證的字段名",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "description": "需要驗證的字段值",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ignoreKey",
+            "required": false,
+            "description": "忽略指定的id(一般更新數據時驗證唯一性需要傳自身的id過來以便後端忽略自身)",
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "返回教室类型集合",
+            "description": "返回驗證結果",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/roomTypeItem"
+                "$ref": "#/definitions/fieldIsUniqueItem"
               }
             }
           },
@@ -887,6 +902,55 @@
             "schema": {
               "items": {
                 "$ref": "#/definitions/deletedItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/class/field_is_unique/{field}/{value}/{ignoreKey}": {
+      "get": {
+        "tags": [
+          "class"
+        ],
+        "summary": "判斷指定字段是否唯一",
+        "description": "判斷指定字段是否唯一",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field",
+            "required": true,
+            "description": "需要驗證的字段名",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "description": "需要驗證的字段值",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ignoreKey",
+            "required": false,
+            "description": "忽略指定的id(一般更新數據時驗證唯一性需要傳自身的id過來以便後端忽略自身)",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回驗證結果",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fieldIsUniqueItem"
               }
             }
           },
@@ -1955,7 +2019,7 @@
     "/child_types": {
       "get": {
         "tags": [
-          "types"
+          "child_types"
         ],
         "summary": "获取指定类型下的子类型列表",
         "description": "获取指定类型下的子类型列表",
@@ -2032,190 +2096,6 @@
                 "$ref": "#/definitions/incumbentItem"
               }
             }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      }
-    },
-    "/types": {
-      "get": {
-        "tags": [
-          "types"
-        ],
-        "summary": "获取类型列表",
-        "description": "获取类型列表",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "返回类型列表",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/typeItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "types"
-        ],
-        "summary": "添加类型",
-        "description": "添加类型",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "name",
-            "required": true,
-            "description": "类型名称",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "parent_id",
-            "description": "父类ID",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "description": "类型描述",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "返回成功创建的类型",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/typeItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部出错"
-          }
-        }
-      }
-    },
-    "/types/{type_id}": {
-      "get": {
-        "tags": [
-          "types"
-        ],
-        "summary": "获取指定的类型数据",
-        "description": "获取指定的类型数据",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "type_id",
-            "required": true,
-            "description": "类型ID",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "返回指定类型数据",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/typeItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "types"
-        ],
-        "summary": "修改类型数据",
-        "description": "修改类型数据",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "type_id",
-            "required": true,
-            "description": "类型ID",
-            "type": "integer"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "description": "类型名称",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "parent_id",
-            "description": "父类ID",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "description": "类型描述",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "返回更新后的类型数据",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/typeItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部出错"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "types"
-        ],
-        "summary": "删除类型",
-        "description": "删除类型",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "type_id",
-            "required": true,
-            "description": "类型ID",
-            "type": "integer"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "删除成功"
           },
           "500": {
             "description": "内部错误"
@@ -2692,8 +2572,8 @@
         },
         "name": {
           "type": "string",
-          "description": "职称",
-          "example": "教授"
+          "description": "學歷",
+          "example": "博士"
         },
         "academic_code": {
           "type": "string",
@@ -3144,6 +3024,24 @@
         "name": {
           "type": "string",
           "example": "普通教师"
+        }
+      }
+    },
+    "fieldIsUniqueItem": {
+      "required": [
+        "is_allowed_verify",
+        "is_unique"
+      ],
+      "properties": {
+        "is_allowed_verify": {
+          "type": "bool",
+          "example": true,
+          "description":"給定的字段是否允許驗證唯一性"
+        },
+        "is_unique": {
+          "type": "bool",
+          "example": true,
+          "description":"給定的字段是否唯一"
         }
       }
     }
