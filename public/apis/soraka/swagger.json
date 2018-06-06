@@ -43,24 +43,8 @@
       "description": "学生管理"
     },
     {
-      "name": "nations",
-      "description": "民族"
-    },
-    {
-      "name": "political_outlooks",
-      "description": "政治面貌"
-    },
-    {
-      "name": "child_types",
-      "description": "指定类型下的子类型列表"
-    },
-    {
-      "name": "academic_qualification",
-      "description": "学历信息列表"
-    },
-    {
-      "name": "incumbent_title",
-      "description": "职称信息列表"
+      "name": "types",
+      "description": "类型管理"
     }
   ],
   "paths": {
@@ -1648,6 +1632,55 @@
         }
       }
     },
+    "/students/field_is_unique/{field}/{value}/{ignoreKey}": {
+      "get": {
+        "tags": [
+          "students"
+        ],
+        "summary": "判斷指定字段是否唯一",
+        "description": "判斷指定字段是否唯一",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field",
+            "required": true,
+            "description": "需要驗證的字段名",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "value",
+            "required": true,
+            "description": "需要驗證的字段值",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ignoreKey",
+            "required": false,
+            "description": "忽略指定的id(一般更新數據時驗證唯一性需要傳自身的id過來以便後端忽略自身)",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回驗證結果",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fieldIsUniqueItem"
+              }
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
     "/students/{student_id}": {
       "get": {
         "tags": [
@@ -1911,7 +1944,7 @@
           },
           {
             "in": "query",
-            "name": "ramark",
+            "name": "remark",
             "description": "备注",
             "type": "string"
           }
@@ -1964,74 +1997,22 @@
         }
       }
     },
-    "/nations": {
+    "/types?names={names}": {
       "get": {
         "tags": [
-          "nations"
+          "types"
         ],
-        "summary": "获取民族列表",
-        "description": "获取民族列表",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "返回民族信息集合",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/nationItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      }
-    },
-    "/political_outlooks": {
-      "get": {
-        "tags": [
-          "political_outlooks"
-        ],
-        "summary": "获取政治面貌列表",
-        "description": "获取政治面貌列表",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "返回政治面貌信息集合",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/politicalOutlookItem"
-              }
-            }
-          },
-          "500": {
-            "description": "内部错误"
-          }
-        }
-      }
-    },
-    "/child_types": {
-      "get": {
-        "tags": [
-          "child_types"
-        ],
-        "summary": "获取指定类型下的子类型列表",
-        "description": "获取指定类型下的子类型列表",
+        "summary": "获取类型列表",
+        "description": "获取类型列表",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "name",
-            "required": true,
-            "description": "类型name[room_type(教室类型),setting_type(配置类型),id_card_type(身份证件类型),household_type(户口性质),length_schooling_type(学年制),student_type(学生类型),junior_high_school_type(生源类别),health_status_type(健康状况),family_economic_type(家庭经济情况)]",
+            "in": "path",
+            "name": "names",
+            "required": false,
+            "description": "类型name[nation_type(民族类型),politicaloutlook_type(政治面貌),academic_qualification_type(学历情况),incumbenttitle_type(现任职称),room_type(教室类型),setting_type(配置类型),id_card_type(身份证件类型),household_type(户口性质),length_schooling_type(学年制),student_type(学生类型),junior_high_school_type(生源类别),health_status_type(健康状况),family_economic_type(家庭经济情况)]",
             "type": "string"
           }
         ],
@@ -2041,7 +2022,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/childTypeItem"
+                "$ref": "#/definitions/typeItem"
               }
             }
           },
@@ -2051,23 +2032,32 @@
         }
       }
     },
-    "/academic_qualification": {
+    "/types/{id}": {
       "get": {
         "tags": [
-          "incumbent_title"
+          "types"
         ],
-        "summary": "获取学历信息列表",
-        "description": "获取学历信息列表",
+        "summary": "获取指定类型",
+        "description": "获取指定类型",
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "类型ID",
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "返回学历信息列表",
+            "description": "返回指定类型列表",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/academicQuaItem"
+                "$ref": "#/definitions/typeItem"
               }
             }
           },
@@ -2075,30 +2065,82 @@
             "description": "内部错误"
           }
         }
-      }
-    },
-    "/incumbent_title": {
-      "get": {
+      },
+      "put": {
         "tags": [
-          "academic_qualification"
+          "types"
         ],
-        "summary": "获取职称信息列表",
-        "description": "获取职称信息列表",
+        "summary": "修改类型信息",
+        "description": "修改类型信息",
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "类型 ID",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "类型名称",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "description",
+            "description": "描述",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "parent_id",
+            "description": "类型父类ID",
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "返回职称信息列表",
+            "description": "返回修改后的类型信息",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/incumbentItem"
+                "$ref": "#/definitions/typeItem"
               }
             }
           },
           "500": {
-            "description": "内部错误"
+            "description": "内部出错"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "types"
+        ],
+        "summary": "删除类型",
+        "description": "删除类型",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "类型 ID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "删除成功"
+          },
+          "500": {
+            "description": "内部出错"
           }
         }
       }
@@ -2366,7 +2408,7 @@
           "example": "男"
         },
         "nation": {
-          "$ref": "#/definitions/nationItem",
+          "$ref": "#/definitions/typeItem",
           "description": "民族"
         },
         "place_of_origin": {
@@ -2410,19 +2452,19 @@
           "example": "20"
         },
         "id_card_type": {
-          "$ref": "#/definitions/idCardTypeItem",
+          "$ref": "#/definitions/typeItem",
           "description": "身份證件類型"
         },
         "academic_qualification": {
-          "$ref": "#/definitions/academicQualificationItem",
+          "$ref": "#/definitions/typeItem",
           "description": "學歷情況"
         },
         "political_outlook": {
-          "$ref": "#/definitions/politicalOutlookItem",
+          "$ref": "#/definitions/typeItem",
           "description": "政治面貌"
         },
         "incumbent_title": {
-          "$ref": "#/definitions/incumbentTitleItem",
+          "$ref": "#/definitions/typeItem",
           "description": "現任職稱"
         },
         "identification_number": {
@@ -2530,147 +2572,6 @@
         }
       }
     },
-    "incumbentTitleItem": {
-      "required": [
-        "id",
-        "name",
-        "created_at",
-        "updated_at"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 2
-        },
-        "name": {
-          "type": "string",
-          "description": "职称",
-          "example": "教授"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        }
-      }
-    },
-    "academicQualificationItem": {
-      "required": [
-        "id",
-        "name",
-        "academic_code",
-        "created_at",
-        "updated_at"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 2
-        },
-        "name": {
-          "type": "string",
-          "description": "學歷",
-          "example": "博士"
-        },
-        "academic_code": {
-          "type": "string",
-          "description": "学历代码",
-          "example": "0231342"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        }
-      }
-    },
-    "idCardTypeItem": {
-      "required": [
-        "id",
-        "name",
-        "created_at",
-        "updated_at"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 2
-        },
-        "name": {
-          "type": "string",
-          "description": "身份證件類型",
-          "example": "中华人民共和国居民身份证"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        }
-      }
-    },
-    "politicalOutlookItem": {
-      "required": [
-        "id",
-        "name",
-        "created_at",
-        "updated_at"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 2
-        },
-        "name": {
-          "type": "string",
-          "description": "政治面貌",
-          "example": "黨員"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        }
-      }
-    },
-    "nationItem": {
-      "required": [
-        "id",
-        "name",
-        "created_at",
-        "updated_at"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 2
-        },
-        "name": {
-          "type": "string",
-          "description": "民族",
-          "example": "漢族"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        },
-        "updated_at": {
-          "type": "string",
-          "example": "2018-04-18 13:46:11"
-        }
-      }
-    },
     "studentItem": {
       "required": [
         "id",
@@ -2709,7 +2610,7 @@
           "example": "2018-02-02"
         },
         "nation": {
-          "$ref": "#/definitions/nationItem",
+          "$ref": "#/definitions/typeItem",
           "description": "民族"
         },
         "household_type": {
@@ -2758,7 +2659,7 @@
           "example": "333333315390936335"
         },
         "political_outlook": {
-          "$ref": "#/definitions/politicalOutlookItem",
+          "$ref": "#/definitions/typeItem",
           "description": "政治面貌"
         },
         "phone_number": {
@@ -2990,43 +2891,6 @@
         }
       }
     },
-    "academicQuaItem": {
-      "required": [
-        "id",
-        "name",
-        "academic_code"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 1
-        },
-        "name": {
-          "type": "string",
-          "example": "博士研究生毕业"
-        },
-        "academic_code": {
-          "type": "integer",
-          "example": 123
-        }
-      }
-    },
-    "incumbentItem": {
-      "required": [
-        "id",
-        "name"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": 1
-        },
-        "name": {
-          "type": "string",
-          "example": "普通教师"
-        }
-      }
-    },
     "fieldIsUniqueItem": {
       "required": [
         "is_allowed_verify",
@@ -3036,12 +2900,12 @@
         "is_allowed_verify": {
           "type": "bool",
           "example": true,
-          "description":"給定的字段是否允許驗證唯一性"
+          "description": "給定的字段是否允許驗證唯一性"
         },
         "is_unique": {
           "type": "bool",
           "example": true,
-          "description":"給定的字段是否唯一"
+          "description": "給定的字段是否唯一"
         }
       }
     }
