@@ -4,7 +4,6 @@ FROM nginx:1.13-alpine
 COPY deploy/source.list /etc/apk/repositories
 
 COPY deploy/nginx.conf /etc/nginx/
-# COPY ./public/ /usr/share/nginx/html/
 
 ADD deploy/docker-run.sh /usr/share/nginx/
 

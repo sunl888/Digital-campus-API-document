@@ -373,7 +373,7 @@
             "in": "path",
             "name": "modelName",
             "required": true,
-            "description": "支持導出的Models: rooms,colleges",
+            "description": "支持導出的Models: rooms, colleges, classes, teachers",
             "type": "string"
           }
         ],
