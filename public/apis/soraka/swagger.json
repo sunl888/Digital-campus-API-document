@@ -408,7 +408,7 @@
             "in": "path",
             "name": "modelName",
             "required": true,
-            "description": "支持導入的Models: rooms",
+            "description": "支持導入的Models: rooms, classes",
             "type": "string"
           },
           {
@@ -421,6 +421,41 @@
         "responses": {
           "204": {
             "description": "导入指定的Model到数据库",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/excel/import/templates/{template}": {
+      "get": {
+        "tags": [
+          "excel"
+        ],
+        "summary": "下载导入数据的模板",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "下载导入数据的模板",
+        "produces": [
+          "application/vnd.ms-excel"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template",
+            "required": true,
+            "description": "templates: classes, rooms",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "下载导入数据的模板",
             "schema": {
               "type": "file"
             }
