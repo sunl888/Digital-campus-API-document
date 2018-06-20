@@ -45,6 +45,10 @@
     {
       "name": "types",
       "description": "类型管理"
+    },
+    {
+      "name": "recycle_bin",
+      "description": "回收站管理"
     }
   ],
   "paths": {
@@ -373,7 +377,7 @@
             "in": "path",
             "name": "modelName",
             "required": true,
-            "description": "支持導出的Models: rooms, colleges, classes, teachers",
+            "description": "支持導出的Models: rooms, colleges, classes, teachers, students",
             "type": "string"
           }
         ],
@@ -2176,6 +2180,202 @@
           },
           "500": {
             "description": "内部出错"
+          }
+        }
+      }
+    },
+    "/recycle_bin/{model_name}": {
+      "get": {
+        "tags": [
+          "recycle_bin"
+        ],
+        "summary": "获取指定模型中软删除的数据",
+        "description": "获取指定模型中软删除的数据",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "description": "模型名称 [teachers, classes, colleges, terms, types, rooms, students]",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回指定模型软删除列表",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/recycle_bin/restore/{model_name}/{id}": {
+      "get": {
+        "tags": [
+          "recycle_bin"
+        ],
+        "summary": "指定模型下单条数据恢复",
+        "description": "指定模型下单条数据恢复",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "description": "模型名称 [teachers, classes, colleges, terms, types, rooms, students]",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "指定ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回是否恢复成功",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/recycle_bin/restore/{model_name}?ids={ids}": {
+      "get": {
+        "tags": [
+          "recycle_bin"
+        ],
+        "summary": "指定模型下的批量恢复",
+        "description": "指定模型下的批量恢复",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "description": "模型名称 [teachers, classes, colleges, terms, types, rooms, students]",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ids",
+            "required": true,
+            "collectionFormat": "csv",
+            "description": "进行批量恢复的ID数组",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回是否恢复成功",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/recycle_bin/{model_name}/{id}": {
+      "delete": {
+        "tags": [
+          "recycle_bin"
+        ],
+        "summary": "指定模型下单条数据永久删除",
+        "description": "指定模型下单条数据永久删除",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "description": "模型名称 [teachers, classes, colleges, terms, types, rooms, students]",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "指定ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回是否删除成功",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "500": {
+            "description": "内部错误"
+          }
+        }
+      }
+    },
+    "/recycle_bin/{model_name}?ids={id}": {
+      "delete": {
+        "tags": [
+          "recycle_bin"
+        ],
+        "summary": "指定模型下批量数据永久删除",
+        "description": "指定模型下批量数据永久删除",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "description": "模型名称 [teachers, classes, colleges, terms, types, rooms, students]",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "ids",
+            "required": true,
+            "collectionFormat": "csv",
+            "description": "进行批量永久删除的ID数组",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回是否删除成功",
+            "schema": {
+              "type": "array"
+            }
+          },
+          "500": {
+            "description": "内部错误"
           }
         }
       }
